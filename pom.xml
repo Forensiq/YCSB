@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 
+<!--
 Copyright (c) 2012 - 2016 YCSB contributors. All rights reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you
@@ -85,7 +85,7 @@ LICENSE file.
     <orientdb.version>2.2.10</orientdb.version>
     <redis.version>2.0.0</redis.version>
     <s3.version>1.10.20</s3.version>
-    <voldemort.version>0.81</voldemort.version>
+    <voldemort.version>1.10.23</voldemort.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <thrift.version>0.8.0</thrift.version>
     <hypertable.version>0.9.5.6</hypertable.version>
@@ -139,7 +139,7 @@ LICENSE file.
     <module>solr</module>
     <module>solr6</module>
     <module>tarantool</module>
-    <!--<module>voldemort</module>-->
+    <module>voldemort</module>
   </modules>
 
   <build>
@@ -156,13 +156,13 @@ LICENSE file.
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.3</version>
+        <version>3.6.0</version>
         <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
+          <source>1.8</source>
+          <target>1.8</target>
         </configuration>
       </plugin>
-      <plugin>
+      <!--<plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
         <executions>
@@ -177,7 +177,7 @@ LICENSE file.
             </configuration>
           </execution>
         </executions>
-      </plugin>
+      </plugin>-->
     </plugins>
   </build>
 </project>

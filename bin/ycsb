@@ -275,6 +275,7 @@ def main():
                        project + "*.jar")
         # alredy in jar:jar:jar form
         cp.append(maven_says)
+        print >> sys.stderr, "[DB Locstion] ", db_location
     cp.insert(0, os.path.join(db_dir, "conf"))
     classpath = os.pathsep.join(cp)
     if args.classpath:

@@ -40,6 +40,7 @@ import com.yahoo.ycsb.StringByteIterator;
  * YCSB binding for
  * <a href="http://www.project-voldemort.com/voldemort/">Voldemort</a>.
  */
+
 public class VoldemortClient extends DB {
   private static final Logger LOGGER = Logger.getLogger(VoldemortClient.class);
 

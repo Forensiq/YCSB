@@ -26,6 +26,17 @@ http://wiki.github.com/brianfrankcooper/YCSB/
 https://labs.yahoo.com/news/yahoo-cloud-serving-benchmark/
 ycsb-users@yahoogroups.com  
 
+Forensiq Specific
+-----------------
+
+1. Enter directory *voldemort/dist*
+2. Run the *install.sh* script which will deploy the Voldemort dependency to your local m2 repo
+3. Follow the Build from Source instructions below
+
+### Take Note
+
+YCSB Voldemort defaults to STORE NAME usertable. This is pulled from the config file packaged with YCSB and easier just to adhere to during benchmarks. A sample server config is included to work with the benchmark setup.
+
 Getting Started
 ---------------
 

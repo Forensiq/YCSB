@@ -107,6 +107,7 @@ LICENSE file.
     <!-- all the datastore bindings, lex sorted please -->
     <module>accumulo</module>
     <module>aerospike</module>
+    <module>aerospikeip</module>
     <module>arangodb</module>
     <module>asynchbase</module>
     <module>azuretablestorage</module>

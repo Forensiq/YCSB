@@ -20,19 +20,7 @@ package com.yahoo.ycsb.workloads;
 import java.util.Properties;
 
 import com.yahoo.ycsb.*;
-import com.yahoo.ycsb.generator.AcknowledgedCounterGenerator;
-import com.yahoo.ycsb.generator.ConstantIntegerGenerator;
-import com.yahoo.ycsb.generator.CounterGenerator;
-import com.yahoo.ycsb.generator.DiscreteGenerator;
-import com.yahoo.ycsb.generator.ExponentialGenerator;
-import com.yahoo.ycsb.generator.HistogramGenerator;
-import com.yahoo.ycsb.generator.HotspotIntegerGenerator;
-import com.yahoo.ycsb.generator.NumberGenerator;
-import com.yahoo.ycsb.generator.ScrambledZipfianGenerator;
-import com.yahoo.ycsb.generator.SequentialGenerator;
-import com.yahoo.ycsb.generator.SkewedLatestGenerator;
-import com.yahoo.ycsb.generator.UniformIntegerGenerator;
-import com.yahoo.ycsb.generator.ZipfianGenerator;
+import com.yahoo.ycsb.generator.*;
 import com.yahoo.ycsb.measurements.Measurements;
 
 import java.io.IOException;
@@ -41,7 +29,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Vector;
 
 
@@ -476,6 +463,8 @@ public class CoreWorkload extends Workload {
       int expectednewkeys = (int) ((opcount) * insertproportion * 2.0); // 2 is fudge factor
 
       keychooser = new ScrambledZipfianGenerator(insertstart, insertstart + insertcount + expectednewkeys);
+    } else if (requestdistrib.compareTo("uniform-long") == 0) {
+      keychooser = new UniformLongGenerator();
     } else if (requestdistrib.compareTo("latest") == 0) {
       keychooser = new SkewedLatestGenerator(transactioninsertkeysequence);
     } else if (requestdistrib.equals("hotspot")) {
@@ -672,15 +661,17 @@ public class CoreWorkload extends Workload {
     _measurements.reportStatus("VERIFY", verifyStatus);
   }
 
-  int nextKeynum() {
-    int keynum;
+  long nextKeynum() {
+    long keynum;
     if (keychooser instanceof ExponentialGenerator) {
       do {
-        keynum = transactioninsertkeysequence.lastValue() - keychooser.nextValue().intValue();
+        keynum = transactioninsertkeysequence.lastValue() - keychooser.nextValue().longValue();
       } while (keynum < 0);
+    } else if (keychooser instanceof UniformLongGenerator) {
+      keynum = keychooser.nextValue().longValue();
     } else {
       do {
-        keynum = keychooser.nextValue().intValue();
+        keynum = keychooser.nextValue().longValue();        
       } while (keynum > transactioninsertkeysequence.lastValue());
     }
     return keynum;
@@ -688,10 +679,10 @@ public class CoreWorkload extends Workload {
 
   public void doTransactionRead(DB db) {
     // choose a random key
-    int keynum = nextKeynum();
+    long keynum = nextKeynum();
 
     String keyname = buildKeyName(keynum);
-
+    
     HashSet<String> fields = null;
 
     if (!readallfields) {
@@ -715,7 +706,7 @@ public class CoreWorkload extends Workload {
   
   public void doTransactionReadModifyWrite(DB db) {
     // choose a random key
-    int keynum = nextKeynum();
+    long keynum = nextKeynum();
 
     String keyname = buildKeyName(keynum);
 
@@ -762,7 +753,7 @@ public class CoreWorkload extends Workload {
 
   public void doTransactionScan(DB db) {
     // choose a random key
-    int keynum = nextKeynum();
+    long keynum = nextKeynum();
 
     String startkeyname = buildKeyName(keynum);
 
@@ -784,7 +775,7 @@ public class CoreWorkload extends Workload {
 
   public void doTransactionUpdate(DB db) {
     // choose a random key
-    int keynum = nextKeynum();
+    long keynum = nextKeynum();
 
     String keyname = buildKeyName(keynum);
 

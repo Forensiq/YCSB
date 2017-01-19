@@ -19,7 +19,7 @@
 #                        
 #   Read/update ratio: 100/0
 
-operationcount=100
+operationcount=10000
 workload=com.yahoo.ycsb.workloads.CoreWorkload
 
 readallfields=true
@@ -37,5 +37,4 @@ insertorder=ordered
 
 table=reputation
 
-
-
+exportfile=results

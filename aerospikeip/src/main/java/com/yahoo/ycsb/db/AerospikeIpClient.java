@@ -18,7 +18,6 @@
 package com.yahoo.ycsb.db;
 
 import com.aerospike.client.AerospikeException;
-import com.aerospike.client.Bin;
 import com.aerospike.client.Key;
 import com.aerospike.client.Record;
 import com.aerospike.client.policy.ClientPolicy;
@@ -140,49 +139,27 @@ public class AerospikeIpClient extends com.yahoo.ycsb.DB {
 
   private Status write(String table, String key, WritePolicy writePolicy,
       HashMap<String, ByteIterator> values) {
-    Bin[] bins = new Bin[values.size()];
-    int index = 0;
-
-    for (Map.Entry<String, ByteIterator> entry: values.entrySet()) {
-      bins[index] = new Bin(entry.getKey(), entry.getValue().toArray());
-      ++index;
-    }
-
-    Key keyObj = new Key(namespace, table, key);
-
-    try {
-      client.put(writePolicy, keyObj, bins);
-      return Status.OK;
-    } catch (AerospikeException e) {
-      System.err.println("Error while writing key " + key + ": " + e);
-      return Status.ERROR;
-    }
+    System.err.println("Write not implemented");
+    return Status.ERROR;
   }
 
   @Override
   public Status update(String table, String key,
       HashMap<String, ByteIterator> values) {
-    return write(table, key, updatePolicy, values);
+    System.err.println("Update not implemented");
+    return Status.ERROR;
   }
 
   @Override
   public Status insert(String table, String key,
       HashMap<String, ByteIterator> values) {
-    return write(table, key, insertPolicy, values);
+    System.err.println("Insert not implemented");
+    return Status.ERROR;
   }
 
   @Override
   public Status delete(String table, String key) {
-    try {
-      if (!client.delete(deletePolicy, new Key(namespace, table, key))) {
-        System.err.println("Record key " + key + " not found (delete)");
-        return Status.ERROR;
-      }
-
-      return Status.OK;
-    } catch (AerospikeException e) {
-      System.err.println("Error while deleting key " + key + ": " + e);
-      return Status.ERROR;
-    }
+    System.err.println("Delete not implemented");
+    return Status.ERROR;
   }
 }
